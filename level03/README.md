@@ -34,6 +34,8 @@ Le fichier a le **bit SUID** actif (`s` dans `rws`), il s'exécute donc avec les
 
 ### Étape 2 : Analyser le binaire
 
+#### Méthode 1 : `strings` (voir les chaînes de texte)
+
 ```bash
 strings level03 | grep echo
 ```
@@ -43,6 +45,47 @@ Résultat :
 ```
 /usr/bin/env echo Exploit me
 ```
+
+**Analyse** : `echo` n'a pas de chemin absolu → cherché dans PATH → Vulnérable !
+
+#### Méthode 2 : `ltrace` (voir les appels de bibliothèque)
+
+```bash
+ltrace ./level03
+```
+
+Résultat :
+
+```
+__libc_start_main(0x80484a4, 1, 0xbffff7f4, 0x80484f0, ...)
+system("/usr/bin/env echo Exploit me")
++++ exited (status 0) +++
+```
+
+**Analyse** : On voit directement l'appel à `system()` avec la commande vulnérable.
+
+#### Méthode 3 : `strace` (voir les appels système)
+
+```bash
+strace ./level03 2>&1 | grep exec
+```
+
+Résultat :
+
+```
+execve("./level03", ["./level03"], [/* 18 vars */]) = 0
+execve("/bin/sh", ["sh", "-c", "/usr/bin/env echo Exploit me"], [/* 18 vars */]) = 0
+```
+
+**Analyse** : Moins direct, mais montre que `/bin/sh` exécute la commande avec `env`.
+
+#### 🎯 Comparaison des outils
+
+| Outil         | Utilité                       | Facilité | Meilleur pour                        |
+| ------------- | ----------------------------- | -------- | ------------------------------------ |
+| **`strings`** | Extraire les chaînes de texte | ⭐⭐⭐   | Détection rapide de commandes        |
+| **`ltrace`**  | Tracer les appels de fonction | ⭐⭐⭐   | Voir les appels `system()`, `exec()` |
+| **`strace`**  | Tracer les appels système     | ⭐⭐     | Debugging bas niveau                 |
 
 **Vulnérabilité détectée** : Le binaire utilise `/usr/bin/env echo` qui cherche `echo` dans le `PATH`.
 
