@@ -1,29 +1,16 @@
-# Level 00 - Snowcrash
+# Level00
 
-## Objectif
-
-Trouver le flag de l'utilisateur `flag00`.
-
-## Solution
-
-### Étape 1 : Localiser le fichier
-
-```bash
-find / -user flag00 2> /dev/null
+```
+level00@SnowCrash:~$ find / -user flag00 2> /dev/null
+/usr/sbin/john
+/rofs/usr/sbin/john
 ```
 
-Résultat : `/usr/sbin/john`
-
-### Étape 2 : Afficher le contenu
-
-```bash
-cat /usr/sbin/john
+```
+level00@SnowCrash:~$ cat /usr/sbin/john
+cdiiddwpgswtgt
 ```
 
-Résultat : `cdiiddwpgswtgt`
+With the help of this [decoder](https://dencode.com/en/), I was able to find with algorithm this was.
 
-### Étape 3 : Décoder (ROT+15)
-
-Application d'un décalage ROT+15 sur `cdiiddwpgswtgt` via [dcode.fr](https://dcode.fr)
-
-**Flag00 password** : `nottoohardhere`
+Which is `nottoohardhere`
