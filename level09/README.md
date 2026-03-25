@@ -16,12 +16,14 @@ Run the binary to see it in action:
 The token file contains the **already encoded** password, so we need to reverse it by subtracting the index from each character:
 
 ```python
-import sys
-hash = sys.argv[1]
-decrypted_hash = ""
-for i in range(0, len(hash)):
-    decrypted_hash = decrypted_hash + chr(ord(hash[i]) - i)
-print(decrypted_hash)
+with open("./token", "rb") as f:
+    data = f.read().strip()
+
+decrypted = ""
+for i, b in enumerate(data):
+    decrypted += chr(b - i)
+
+print(decrypted)
 ```
 
 Run it by passing the token content as an argument:

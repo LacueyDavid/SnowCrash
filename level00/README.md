@@ -1,16 +1,23 @@
-# Level00
+# Level 00
 
-```
-level00@SnowCrash:~$ find / -user flag00 2> /dev/null
-/usr/sbin/john
-/rofs/usr/sbin/john
-```
+### Étape 1 : Localiser le fichier
 
-```
-level00@SnowCrash:~$ cat /usr/sbin/john
-cdiiddwpgswtgt
+```bash
+find / -user flag00 2> /dev/null
 ```
 
-With the help of this [decoder](https://dencode.com/en/), I was able to find with algorithm this was.
+Résultat : `/usr/sbin/john`
 
-Which is `nottoohardhere`
+### Étape 2 : Afficher le contenu
+
+```bash
+cat /usr/sbin/john
+```
+
+Résultat : `cdiiddwpgswtgt`
+
+### Étape 3 : Décoder (ROT+15)
+
+Application d'un décalage ROT+15 sur `cdiiddwpgswtgt` via [dcode.fr](https://dcode.fr)
+
+**Flag00 password** : `nottoohardhere`
