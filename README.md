@@ -22,7 +22,7 @@ I kept the notes practical on purpose: what I checked, what worked, and why it w
 ## Quick start
 
 ```bash
-ssh level00@<VM_IP> -p 4242
+ssh level00@localhost -p 4242
 # initial password
 level00
 ```

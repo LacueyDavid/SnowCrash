@@ -11,7 +11,7 @@ gdb ./level13
 break getuid
 run
 finish
-set $eax = 0x1092
+set $eax = 4242
 continue
 ```
 

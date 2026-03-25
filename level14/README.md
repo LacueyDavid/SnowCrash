@@ -1,19 +1,21 @@
 # Level 14
 
-Final level is mostly debugger control flow manipulation.
+Really funny final level, it's mostly debugger control flow manipulation.
 
 I used gdb to bypass anti-debug behavior and fake expected UID path:
 
 ```bash
 gdb /bin/getflag
 break ptrace
-run
-set $eax = 0
-return
 break getuid
-continue
-set $eax = 2014
+run
+
 finish
+set $eax = 0
+continue
+
+finish
+set $eax = 3014
 continue
 ```
 

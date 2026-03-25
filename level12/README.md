@@ -40,5 +40,3 @@ Read result:
 ```bash
 cat /tmp/flag12.txt
 ```
-
-Why this works: even after uppercase conversion, the payload still resolves correctly, and shell metacharacters are still interpreted.
