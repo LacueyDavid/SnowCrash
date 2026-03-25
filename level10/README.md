@@ -11,7 +11,7 @@ If we look at the disassembler we can see that there is a moment where `access()
 
 I am aware of the `access()` exploit that I once used before in another CTF.
 `access()` can be exploited with a race condition. `access()` just checks once and afterwards assumes it is the same file with the same access.
-BUT what if you quickly switch from a file you are allowed to read to a file you are not AFTER the `access()` did their chaeck.0
+BUT what if you quickly switch from a file you are allowed to read to a file you are not AFTER the `access()` did their check.
 
 We need three terminals for this exploit.
 
@@ -46,3 +46,11 @@ nc -lk 6969
 `-lk` means to check for a specific port until told to stop.
 
 We know we need to check 6969 because of the disassembler
+
+```
+08048766            printf("Connecting to %s:6969 .. ", eax_7)
+```
+
+### Source
+
+[Race Condition](https://book.jorianwoltjer.com/binary-exploitation/race-conditions)
