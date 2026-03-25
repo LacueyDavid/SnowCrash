@@ -1,48 +1,40 @@
 # SnowCrash
 
-## 📋 Description
+This repo is my full SnowCrash walkthrough, level by level.
 
-SnowCrash est un projet de sécurité informatique de l'école 42 axé sur l'exploitation de vulnérabilités et la résolution de challenges CTF (Capture The Flag). L'objectif est de progresser à travers différents niveaux en exploitant des failles de sécurité pour récupérer des flags et accéder au niveau suivant.
+The idea is always the same:
 
-## 🎯 Objectifs
+1. log in
+2. find what is broken
+3. abuse it
+4. grab the password for the next level
 
-- Comprendre les mécanismes de sécurité Unix/Linux
-- Apprendre à identifier et exploiter des vulnérabilités
-- Développer des compétences en reverse engineering
-- Maîtriser l'analyse de binaires et de scripts
-- Pratiquer l'escalade de privilèges
+I kept the notes practical on purpose: what I checked, what worked, and why it worked.
 
-## 🔧 Compétences développées
+## What this project teaches
 
-- Analyse de code et reverse engineering
-- Exploitation de vulnérabilités (buffer overflow, injection, etc.)
-- Cryptographie et déchiffrement
-- Manipulation de permissions et d'utilisateurs Unix
-- Analyse de binaires avec GDB, ltrace, strace
-- Scripts shell et programmation système
+- Linux internals and permissions
+- SUID/SGID abuse patterns
+- weak crypto / weak hashing pitfalls
+- command injection and bad shell usage
+- binary debugging with gdb
 
-## 🚀 Utilisation
-
-Le projet se présente sous forme d'une machine virtuelle ISO contenant 14 niveaux (level00 à level13) et un niveau final (level14).
+## Quick start
 
 ```bash
-# Se connecter via SSH au niveau souhaité
-ssh levelXX@<IP> -p 4242
-
-# Mot de passe du level00
+ssh level00@<VM_IP> -p 4242
+# initial password
 level00
 ```
 
-Chaque niveau contient un challenge à résoudre pour obtenir le mot de passe du niveau suivant.
+Then just follow each level folder from 00 to 14.
 
-## 📁 Structure
+## Structure
 
-Chaque dossier `levelXX/` contient :
+- level00 -> level14: one write-up per level
+- flagXX.txt: token traces / notes
+- helper scripts when needed (example: level09/decrypt.py)
 
-- Un README détaillant la solution du niveau
-- Les fichiers et scripts nécessaires à la résolution
-- Les explications des vulnérabilités exploitées
+## Important
 
-## ⚠️ Avertissement
-
-Ce projet est à but éducatif uniquement. Les techniques présentées ne doivent être utilisées que dans un cadre légal et éthique.
+This is educational content for legal lab usage only.

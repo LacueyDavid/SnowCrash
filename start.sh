@@ -2,8 +2,8 @@
 #!/bin/bash
 
 # Variables
-ISO_PATH="$HOME/iso/SnowCrash.iso"
-DISK_PATH="$HOME/iso/snowcrash_disk.qcow2"
+ISO_PATH="./iso/SnowCrash.iso"
+DISK_PATH="./iso/snowcrash_disk.qcow2"
 DISK_SIZE="4G"
 RAM="2G"
 CPUS=2

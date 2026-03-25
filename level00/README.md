@@ -1,23 +1,43 @@
 # Level 00
 
-### Étape 1 : Localiser le fichier
+Pretty chill first level.
+
+I searched for files owned by flag00:
 
 ```bash
-find / -user flag00 2> /dev/null
+find / -user flag00 2>/dev/null
 ```
 
-Résultat : `/usr/sbin/john`
+One useful file was:
 
-### Étape 2 : Afficher le contenu
+```text
+/usr/sbin/john
+```
+
+Then:
 
 ```bash
 cat /usr/sbin/john
 ```
 
-Résultat : `cdiiddwpgswtgt`
+Output:
 
-### Étape 3 : Décoder (ROT+15)
+```text
+cdiiddwpgswtgt
+```
 
-Application d'un décalage ROT+15 sur `cdiiddwpgswtgt` via [dcode.fr](https://dcode.fr)
+That string is just a ROT shift. Decoding gives:
 
-**Flag00 password** : `nottoohardhere`
+```text
+nottoohardhere
+```
+
+Use it:
+
+```bash
+su flag00
+# password: nottoohardhere
+getflag
+```
+
+weak obfuscation is not security.

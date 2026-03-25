@@ -1,43 +1,37 @@
 # Level 01
 
-### Étape 1 : Examiner le fichier /etc/passwd
+Here the trick is the password hash in /etc/passwd.
 
 ```bash
 cat /etc/passwd
 ```
 
-On trouve la ligne de l'utilisateur `flag01` avec un hash de mot de passe :
+Relevant line:
 
-```
+```text
 flag01:42hDRfypTqqnw:3001:3001::/home/flag/flag01:/bin/bash
 ```
 
-Le hash est : `42hDRfypTqqnw`
-
-### Étape 2 : Préparer le fichier pour John
+I extracted the hash and gave it to John:
 
 ```bash
-echo "42hDRfypTqqnw" > passwd
+echo '42hDRfypTqqnw' > passwd.hash
+john passwd.hash
+john --show passwd.hash
 ```
 
-### Étape 3 : Cracker le hash avec John the Ripper
+Recovered password:
+
+```text
+abcdefg
+```
+
+Then:
 
 ```bash
-# Lancer John
-john passwd
-
-# Afficher le résultat
-john --show passwd
+su flag01
+# password: abcdefg
+getflag
 ```
 
-### Résultat
-
-`abcdefg`
-
-### Avoir le flag
-
-su flag01 && getflag
-
-## Explication
-
-Le hash `42hDRfypTqqnw` utilise l'algorithme DES Unix (format ancien de 13 caractères). John the Ripper teste différentes combinaisons et trouve rapidement que le mot de passe est `abcdefg` car il s'agit d'une séquence simple.
+weak password + old hash format situation.
